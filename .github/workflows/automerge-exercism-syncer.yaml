@@ -13,14 +13,13 @@ jobs:
     if: github.event.pull_request.user.login == 'exercism-solutions-syncer[bot]' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
-      # # Keep ONLY if your branch protection requires an approval
-      # - name: Approve PR
-      #   run: gh pr review "$PR" --repo "$GITHUB_REPOSITORY" --approve
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     PR: ${{ github.event.pull_request.number }}
+      - name: Approve PR
+        run: gh pr review "$PR" --repo "$GITHUB_REPOSITORY" --approve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
 
-      - name: Enable auto-merge (squash) and delete branch
+      - name: Merge PR (squash) and delete branch
         run: gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --auto --squash --delete-branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
